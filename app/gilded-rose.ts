@@ -26,15 +26,15 @@ class ItemWithStrategy extends Item {
   }
 
   private getStrategy(name: string): ItemStrategy {
-    var strategies: { [key: string]: ItemStrategy } = {
+    const strategies: { [key: string]: ItemStrategy } = {
       "Sulfuras, Hand of Ragnaros": new SulfurasStrategy(),
       "Backstage passes to a TAFKAL80ETC concert":
         new BackstagePassesStrategy(),
       "Aged Brie": new AgedBrieStrategy(),
       "Conjured item": new ConjuredItemStrategy(),
     };
-    if (strategies[name] !== undefined) return strategies[name];
-    return new CommonItemStrategy();
+
+    return strategies[name] ?? new CommonItemStrategy();
   }
 
   public update() {
