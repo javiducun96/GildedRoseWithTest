@@ -54,10 +54,7 @@ export class GildedRose {
         return;
       }
 
-      this.decreaseQuality(item);
-      if (this.isExpired(item)) {
-        this.decreaseQuality(item);
-      }
+      this.decreaseQualityBy(item, this.isExpired(item) ? 2 : 1);
     });
     return this.items;
   }
@@ -68,10 +65,8 @@ export class GildedRose {
     }
   };
 
-  private decreaseQuality = (item: Item) => {
-    if (item.quality > 0) {
-      item.quality--;
-    }
+  private decreaseQualityBy = (item: Item, decrement: number) => {
+    item.quality = Math.max(0, item.quality - decrement);
   };
 
   private isExpired = (item: Item) => {
