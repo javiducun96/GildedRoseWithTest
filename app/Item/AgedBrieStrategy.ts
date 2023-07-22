@@ -6,7 +6,9 @@ export class AgedBrieStrategy implements ItemStrategy {
     return item.sellIn - 1;
   };
   calculateNewQuality = (item: Item) => {
-    if (item.sellIn < 0) return item.quality + 2;
-    return item.quality + 1;
+    let newQuality;
+    if (item.sellIn < 0) newQuality = item.quality + 2;
+    else newQuality = item.quality + 1;
+    return Math.min(50, newQuality);
   };
 }

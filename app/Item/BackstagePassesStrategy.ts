@@ -7,8 +7,12 @@ export class BackstagePassesStrategy implements ItemStrategy {
   };
   calculateNewQuality = (item: Item) => {
     if (item.sellIn < 0) return 0;
-    if (item.sellIn >= 10) return item.quality + 1;
-    if (item.sellIn >= 5) return item.quality + 2;
-    return item.quality + 3;
+
+    let newQuality;
+    if (item.sellIn >= 10) newQuality = item.quality + 1;
+    else if (item.sellIn >= 5) newQuality = item.quality + 2;
+    else newQuality = item.quality + 3;
+
+    return Math.min(newQuality, 50);
   };
 }
