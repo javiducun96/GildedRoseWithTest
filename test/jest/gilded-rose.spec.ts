@@ -90,4 +90,25 @@ describe("Gilded Rose", () => {
       expect(item.quality).toBeLessThanOrEqual(50);
     });
   });
+
+  it("Backstage passes to a TAFKAL80ETC concert increse quality propertly", () => {
+    const initialItems = [
+      new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 7, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 3, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", -1, 10),
+    ];
+    const gildedRose = new GildedRose(initialItems);
+    let items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(11);
+    expect(items[1].quality).toEqual(12);
+    expect(items[2].quality).toEqual(12);
+    expect(items[3].quality).toEqual(13);
+    expect(items[4].quality).toEqual(13);
+    expect(items[5].quality).toEqual(0);
+    expect(items[6].quality).toEqual(0);
+  });
 });
