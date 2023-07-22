@@ -28,7 +28,7 @@ export class GildedRose {
         return;
       }
 
-      item.sellIn = item.sellIn - 1;
+      item.sellIn--;
 
       if (isBackstage) {
         if (item.sellIn <= 0) {
@@ -63,15 +63,19 @@ export class GildedRose {
     return this.items;
   }
 
-  private increaseQuality = (item) => {
+  private increaseQuality = (item: Item) => {
     if (item.quality < 50) {
       item.quality++;
     }
   };
 
-  private decreaseQuality = (item) => {
+  private decreaseQuality = (item: Item) => {
     if (item.quality > 0) {
       item.quality--;
     }
+  };
+
+  private isExpired = (item: Item) => {
+    return item.sellIn < 0;
   };
 }
