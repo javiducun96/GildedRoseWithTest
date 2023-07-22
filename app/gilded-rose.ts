@@ -31,7 +31,7 @@ export class GildedRose {
       item.sellIn--;
 
       if (isBackstage) {
-        if (item.sellIn <= 0) {
+        if (this.isExpired(item)) {
           item.quality = 0;
         } else {
           this.increaseQuality(item);
@@ -49,14 +49,14 @@ export class GildedRose {
 
       if (isAgedBrie) {
         this.increaseQuality(item);
-        if (item.sellIn < 0) {
+        if (this.isExpired(item)) {
           this.increaseQuality(item);
         }
         return;
       }
 
       this.decreaseQuality(item);
-      if (item.sellIn < 0) {
+      if (this.isExpired(item)) {
         this.decreaseQuality(item);
       }
     });
