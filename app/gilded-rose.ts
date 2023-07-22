@@ -53,16 +53,15 @@ export class GildedRose {
         return;
       }
 
+      if (isAgedBrie) {
+        increaseQuality(item);
+      }
+
       if (!isAgedBrie) {
         if (item.quality > 0) {
           item.quality = item.quality - 1;
         }
-      } else {
-        if (item.quality < 50) {
-          increaseQuality(item);
-        }
       }
-
       if (item.sellIn < 0) {
         if (!isAgedBrie) {
           if (item.quality > 0) {
