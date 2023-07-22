@@ -36,33 +36,40 @@ export class GildedRose {
           return;
         }
 
-        this.increaseQuality(item);
-        if (item.sellIn < 10) {
-          this.increaseQuality(item);
+        if (item.sellIn >= 10) {
+          this.increaseQualityBy(item, 1);
+          return;
         }
-        if (item.sellIn < 5) {
-          this.increaseQuality(item);
+
+        if (item.sellIn >= 5) {
+          this.increaseQualityBy(item, 2);
+          return;
         }
+
+        this.increaseQualityBy(item, 3);
         return;
       }
 
       if (isAgedBrie) {
-        this.increaseQuality(item);
         if (this.isExpired(item)) {
-          this.increaseQuality(item);
+          this.increaseQualityBy(item, 2);
+        } else {
+          this.increaseQualityBy(item, 1);
         }
         return;
       }
 
-      this.decreaseQualityBy(item, this.isExpired(item) ? 2 : 1);
+      if (this.isExpired(item)) {
+        this.decreaseQualityBy(item, 2);
+      } else {
+        this.decreaseQualityBy(item, 1);
+      }
     });
     return this.items;
   }
 
-  private increaseQuality = (item: Item) => {
-    if (item.quality < 50) {
-      item.quality++;
-    }
+  private increaseQualityBy = (item: Item, increment: number) => {
+    item.quality = Math.min(50, item.quality + increment);
   };
 
   private decreaseQualityBy = (item: Item, decrement: number) => {
