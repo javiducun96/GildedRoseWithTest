@@ -22,17 +22,19 @@ class ItemWithStrategy extends Item {
 
   constructor(name, sellIn, quality) {
     super(name, sellIn, quality);
-    if (name === "Sulfuras, Hand of Ragnaros") {
-      this.strategy = new SulfurasStrategy();
-    } else if (name === "Backstage passes to a TAFKAL80ETC concert") {
-      this.strategy = new BackstagePassesStrategy();
-    } else if (name === "Aged Brie") {
-      this.strategy = new AgedBrieStrategy();
-    } else if (name === "Conjured item") {
-      this.strategy = new ConjuredItemStrategy();
-    } else {
-      this.strategy = new CommonItemStrategy();
-    }
+    this.strategy = this.getStrategy(name);
+  }
+
+  private getStrategy(name: string): ItemStrategy {
+    var strategies: { [key: string]: ItemStrategy } = {
+      "Sulfuras, Hand of Ragnaros": new SulfurasStrategy(),
+      "Backstage passes to a TAFKAL80ETC concert":
+        new BackstagePassesStrategy(),
+      "Aged Brie": new AgedBrieStrategy(),
+      "Conjured item": new ConjuredItemStrategy(),
+    };
+    if (strategies[name] !== undefined) return strategies[name];
+    return new CommonItemStrategy();
   }
 
   public update() {
