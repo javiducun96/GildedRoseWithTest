@@ -1,7 +1,7 @@
 import { Item, GildedRose } from "@/gilded-rose";
 
 describe("Gilded Rose", () => {
-  it("Sulfuras is allways 80", () => {
+  it("Sulfuras quality is allways 80", () => {
     const gildedRose = new GildedRose([
       new Item("Sulfuras, Hand of Ragnaros", 0, 80),
     ]);
@@ -11,6 +11,22 @@ describe("Gilded Rose", () => {
     expect(items[0].quality).toEqual(80);
     items = gildedRose.updateQuality();
     expect(items[0].quality).toEqual(80);
+  });
+
+  it("Sulfuras sellin is constant", () => {
+    const initialItems = [
+      new Item("Sulfuras, Hand of Ragnaros", 2, 80),
+      new Item("Sulfuras, Hand of Ragnaros", -15, 80),
+      new Item("Sulfuras, Hand of Ragnaros", 4, 80),
+      new Item("Sulfuras, Hand of Ragnaros", 6, 80),
+    ];
+    const gildedRose = new GildedRose(initialItems);
+
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toEqual(2);
+    expect(items[1].sellIn).toEqual(-15);
+    expect(items[2].sellIn).toEqual(4);
+    expect(items[3].sellIn).toEqual(6);
   });
 
   it("normal article quality degradation", () => {
