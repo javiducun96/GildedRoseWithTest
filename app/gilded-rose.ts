@@ -1,6 +1,7 @@
 import { AgedBrieStrategy } from "./Item/AgedBrieStrategy";
 import { BackstagePassesStrategy } from "./Item/BackstagePassesStrategy";
 import { CommonItemStrategy } from "./Item/CommonItemStrategy";
+import { ConjuredItemStrategy } from "./Item/ConjuredItemStrategy";
 import { ItemStrategy } from "./Item/ItemStrategy";
 import { SulfurasStrategy } from "./Item/SulfurasStrategy";
 
@@ -27,6 +28,8 @@ class ItemWithStrategy extends Item {
       this.strategy = new BackstagePassesStrategy();
     } else if (name === "Aged Brie") {
       this.strategy = new AgedBrieStrategy();
+    } else if (name === "Conjured item") {
+      this.strategy = new ConjuredItemStrategy();
     } else {
       this.strategy = new CommonItemStrategy();
     }

@@ -9,6 +9,8 @@ describe("Gilded Rose", () => {
         new Item("Aged Brie", 2, 3),
         new Item("Backstage passes to a TAFKAL80ETC concert", 2, 1),
         new Item("Sulfuras, Hand of Ragnaros", 2, 80),
+        new Item("Conjured item", -1, 3),
+        new Item("Conjured item", 1, 1),
       ];
       const gildedRose = new GildedRose(initialItems);
       for (let i = 0; i < 50; i++) {
@@ -51,6 +53,20 @@ describe("Gilded Rose", () => {
       expect(items[0].quality).toEqual(46);
       items = gildedRose.updateQuality();
       expect(items[0].quality).toEqual(44);
+    });
+  });
+
+  describe("Conjured item", () => {
+    it("conjured article quality double degradation", () => {
+      const gildedRose = new GildedRose([new Item("Conjured item", 2, 50)]);
+      let items = gildedRose.updateQuality();
+      expect(items[0].quality).toEqual(48);
+      items = gildedRose.updateQuality();
+      expect(items[0].quality).toEqual(46);
+      items = gildedRose.updateQuality();
+      expect(items[0].quality).toEqual(42);
+      items = gildedRose.updateQuality();
+      expect(items[0].quality).toEqual(38);
     });
   });
 
