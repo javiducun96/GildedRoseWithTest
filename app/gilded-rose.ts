@@ -23,7 +23,6 @@ export class GildedRose {
       const isBackstage =
         item.name === "Backstage passes to a TAFKAL80ETC concert";
       const isAgedBrie = item.name === "Aged Brie";
-
       const increaseQuality = (item) => {
         if (item.quality < 50) {
           item.quality++;
@@ -61,13 +60,15 @@ export class GildedRose {
         return;
       }
 
-      if (item.quality > 0) {
-        item.quality = item.quality - 1;
-      }
-      if (item.sellIn < 0) {
+      const decreaseQuality = (item) => {
         if (item.quality > 0) {
-          item.quality = item.quality - 1;
+          item.quality--;
         }
+      };
+
+      decreaseQuality(item);
+      if (item.sellIn < 0) {
+        decreaseQuality(item);
       }
     });
     return this.items;
