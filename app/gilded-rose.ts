@@ -33,16 +33,15 @@ export class GildedRose {
       if (isBackstage) {
         if (this.isExpired(item)) {
           item.quality = 0;
-        } else {
+          return;
+        }
+
+        this.increaseQuality(item);
+        if (item.sellIn < 10) {
           this.increaseQuality(item);
-          if (isBackstage) {
-            if (item.sellIn < 10) {
-              this.increaseQuality(item);
-            }
-            if (item.sellIn < 5) {
-              this.increaseQuality(item);
-            }
-          }
+        }
+        if (item.sellIn < 5) {
+          this.increaseQuality(item);
         }
         return;
       }
