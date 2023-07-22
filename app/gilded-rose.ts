@@ -24,6 +24,12 @@ export class GildedRose {
         item.name === "Backstage passes to a TAFKAL80ETC concert";
       const isAgedBrie = item.name === "Aged Brie";
 
+      const increaseQuality = (item) => {
+        if (item.quality < 50) {
+          item.quality++;
+        }
+      };
+
       if (!isAgedBrie && !isBackstage) {
         if (item.quality > 0) {
           if (!isSulfura) {
@@ -32,17 +38,13 @@ export class GildedRose {
         }
       } else {
         if (item.quality < 50) {
-          item.quality = item.quality + 1;
+          increaseQuality(item);
           if (isBackstage) {
             if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1;
-              }
+              increaseQuality(item);
             }
             if (item.sellIn < 6) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1;
-              }
+              increaseQuality(item);
             }
           }
         }
@@ -62,9 +64,7 @@ export class GildedRose {
             item.quality = item.quality - item.quality;
           }
         } else {
-          if (item.quality < 50) {
-            item.quality = item.quality + 1;
-          }
+          increaseQuality(item);
         }
       }
     });
