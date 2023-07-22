@@ -1,3 +1,6 @@
+import { ItemStrategy } from "./Item/ItemStrategy";
+import { SulfurasStrategy } from "./Item/SulfurasStrategy";
+
 export class Item {
   name: string;
   sellIn: number;
@@ -10,15 +13,37 @@ export class Item {
   }
 }
 
+class ItemWithStrategy extends Item {
+  private strategy: ItemStrategy;
+
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+    if (name === "Sulfuras, Hand of Ragnaros") {
+      this.strategy = new SulfurasStrategy();
+    } else {
+      this.strategy = new SulfurasStrategy(); // ## TODO: Common case
+    }
+  }
+
+  public update() {
+    this.sellIn = this.strategy.calculateNewSellIn(this);
+    this.quality = this.strategy.calculateNewQuality(this);
+  }
+}
+
 export class GildedRose {
-  items: Array<Item>;
+  items: Array<ItemWithStrategy>;
 
   constructor(items = [] as Array<Item>) {
-    this.items = items;
+    this.items = items.map(
+      (item) => new ItemWithStrategy(item.name, item.sellIn, item.quality)
+    );
   }
 
   updateQuality() {
     this.items.forEach((item) => {
+      item.update();
+
       const isSulfura = item.name === "Sulfuras, Hand of Ragnaros";
       const isBackstage =
         item.name === "Backstage passes to a TAFKAL80ETC concert";
