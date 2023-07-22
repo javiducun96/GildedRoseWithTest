@@ -12,4 +12,16 @@ describe("Gilded Rose", () => {
     items = gildedRose.updateQuality();
     expect(items[0].quality).toEqual(80);
   });
+
+  it("normal article quality degradation", () => {
+    const gildedRose = new GildedRose([new Item("Normal article", 2, 50)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(49);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(48);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(46);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(44);
+  });
 });
