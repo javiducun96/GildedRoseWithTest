@@ -23,11 +23,6 @@ export class GildedRose {
       const isBackstage =
         item.name === "Backstage passes to a TAFKAL80ETC concert";
       const isAgedBrie = item.name === "Aged Brie";
-      const increaseQuality = (item) => {
-        if (item.quality < 50) {
-          item.quality++;
-        }
-      };
 
       if (isSulfura) {
         return;
@@ -39,13 +34,13 @@ export class GildedRose {
         if (item.sellIn <= 0) {
           item.quality = 0;
         } else {
-          increaseQuality(item);
+          this.increaseQuality(item);
           if (isBackstage) {
             if (item.sellIn < 10) {
-              increaseQuality(item);
+              this.increaseQuality(item);
             }
             if (item.sellIn < 5) {
-              increaseQuality(item);
+              this.increaseQuality(item);
             }
           }
         }
@@ -53,24 +48,30 @@ export class GildedRose {
       }
 
       if (isAgedBrie) {
-        increaseQuality(item);
+        this.increaseQuality(item);
         if (item.sellIn < 0) {
-          increaseQuality(item);
+          this.increaseQuality(item);
         }
         return;
       }
 
-      const decreaseQuality = (item) => {
-        if (item.quality > 0) {
-          item.quality--;
-        }
-      };
-
-      decreaseQuality(item);
+      this.decreaseQuality(item);
       if (item.sellIn < 0) {
-        decreaseQuality(item);
+        this.decreaseQuality(item);
       }
     });
     return this.items;
   }
+
+  private increaseQuality = (item) => {
+    if (item.quality < 50) {
+      item.quality++;
+    }
+  };
+
+  private decreaseQuality = (item) => {
+    if (item.quality > 0) {
+      item.quality--;
+    }
+  };
 }
